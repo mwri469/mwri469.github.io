@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<h1>{{user.first_name + "'s"}} portfolio</h1>
+<table>
+    <colgroup>
+        <col span="1" style="width: 20%;">
+        <col span="1" style="width: 20%;">
+        <col span="1" style="width: 25%;">
+        <col span="1" style="width: 25%;">
+        <col span="1" style="width: 25%;">
+    </colgroup>
+    <tr>
+        <th> Ticker </th>
+        <th> # Shares </th>
+        <th> Avg. price </th>
+        <th> Curr. price </th>
+        <th> Gain/loss </th>
+    </tr>
+    {% for stock in user.stocks %}
+        <tr>
+            <td>{{stock.ticker}}</td>
+            <td>{{stock.num_shares}}</td>
+            <td>{{stock.b_price}}</td>
+            <td>{{get_price(stock.ticker)['c']}}</td>
+            <td> {{stock.num_shares*(get_price(stock.ticker)['c'] - stock.b_price)}} </td>
+        </tr>
+
+    {% endfor %}
+</table>
+{% endblock %}
