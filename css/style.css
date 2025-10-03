@@ -13,6 +13,12 @@ body {
     min-width: 1200px;
 }
 
+/* Full-width layout for research detail pages */
+body.research-detail {
+    padding: 60px 120px;
+    max-width: none;
+}
+
 header {
     margin-bottom: 20px;
 }
@@ -75,11 +81,28 @@ nav a.active {
     border-radius: 50%;
 }
 
+/* Research link styling */
+.research-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+    transition: all 0.2s ease;
+}
+
+.research-link:hover {
+    text-decoration: none;
+}
+
+.research-link:hover .research-title {
+    color: #B05730;
+}
+
 .research-title {
     font-size: 12px;
     font-weight: 600;
     color: #1a1a1a;
     margin-bottom: 8px;
+    transition: color 0.2s ease;
 }
 
 .research-date {
@@ -100,6 +123,11 @@ nav a.active {
     padding: 20px;
     margin-top: 12px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    transition: box-shadow 0.2s ease;
+}
+
+.paper-box:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
 }
 
 .paper-box .research-title {
@@ -107,11 +135,99 @@ nav a.active {
     font-size: 14px;
 }
 
+.paper-box .research-link:hover .research-title {
+    color: #8a3f1f;
+}
+
 .research-heading {
     font-size: 28px;
     color: #B05730;
     margin-bottom: 20px;
     font-weight: 400;
+}
+
+/* Research detail page styles */
+.research-detail-page {
+    max-width: none;
+}
+
+.research-detail-header {
+    margin-bottom: 40px;
+    padding-bottom: 30px;
+    border-bottom: 2px solid #d4cdb8;
+}
+
+.research-detail-header h2 {
+    font-size: 32px;
+    font-weight: 600;
+    color: #B05730;
+    margin-bottom: 15px;
+    line-height: 1.3;
+}
+
+.research-meta {
+    display: flex;
+    gap: 30px;
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 20px;
+}
+
+.research-abstract {
+    font-size: 16px;
+    line-height: 1.8;
+    color: #2c2c2c;
+    font-weight: 500;
+}
+
+.research-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    margin-top: 40px;
+}
+
+.content-section {
+    background-color: #faf9f4;
+    border: 1px solid #d4cdb8;
+    padding: 30px;
+}
+
+.content-section h3 {
+    font-size: 20px;
+    font-weight: 600;
+    color: #1a1a1a;
+    margin-bottom: 20px;
+}
+
+.content-section p {
+    font-size: 14px;
+    line-height: 1.7;
+    margin-bottom: 15px;
+}
+
+.content-section ul, .content-section ol {
+    font-size: 14px;
+    line-height: 1.7;
+    margin-left: 20px;
+    margin-bottom: 15px;
+}
+
+.back-link {
+    display: inline-block;
+    margin-bottom: 30px;
+    color: #B05730;
+    text-decoration: none;
+    font-size: 14px;
+    padding: 8px 16px;
+    border: 1px solid #B05730;
+    transition: all 0.2s ease;
+}
+
+.back-link:hover {
+    background-color: #B05730;
+    color: #F0EEE5;
+    text-decoration: none;
 }
 
 footer {

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VAE-GAN for Hydrological Stochastic Generation - Martin Wright</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%23F0EEE5'/><text x='50' y='72' font-size='70' font-family='IBM Plex Mono,monospace' text-anchor='middle' fill='%23B05730'>μ</text></svg>">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="research-detail">
+    <header>
+        <h1>Martin Wright &mu;</h1>
+        <nav>
+            <a href="../index.html">Home</a>
+            <a href="../blog.html" class="active">Research</a>
+            <a href="#">Experience</a>
+            <a href="../aboutme.html">About</a>
+        </nav>
+    </header>
+
+    <main class="research-detail-page">
+
+        <div class="research-detail-header">
+            <h2>VAE-GAN for Hydrological Stochastic Generation</h2>
+            <div class="research-meta">
+                <span>October 2025</span>
+                <span>Deep Learning • Hydrology • Climate Modeling</span>
+            </div>
+            <div class="research-abstract">
+                Contemporary methods for stochastically generating climate-change impacted rainfall patterns involve site-based stochastic methods. This paper builds on recent IBM Research methods using VAE models to better model co-variant rainfall patterns by using a prior-posterior sampling method based on latent space. The approach addresses critical limitations in existing weather generators, particularly the challenge of maintaining spatial co-variance while capturing temporal dynamics and extreme weather events.
+            </div>
+        </div>
+
+        <div class="research-content">
+            <div class="content-section">
+                <h3>Background & Motivation</h3>
+                <p>Climate change is increasing the frequency and intensity of extreme weather events, posing significant challenges for water resource planning. Traditional stochastic weather generators face a fundamental limitation: they cannot simultaneously generate spatially co-variant rainfall across multiple sites while preserving multi-variable temporal dependencies (such as rainfall and potential evapotranspiration).</p>
+                <p>For water supply systems spanning geographically diverse catchments, this limitation is critical. The Auckland metropolitan water supply, for instance, relies on ten reservoirs across the Hunua and Waitakere Ranges, plus the Waikato River source. Accurately modeling how rainfall patterns interact across these locations during drought conditions is essential for yield assessment and infrastructure planning.</p>
+                <p>Existing tools like the Stochastic Climate Library (SCL) can generate either multi-site rainfall or co-variant rainfall-PET at a single site, but not both. This forces practitioners to choose between spatial accuracy and physical realism.</p>
+            </div>
+
+            <div class="content-section">
+                <h3>VAE Framework & Innovation</h3>
+                <p>Variational Autoencoders offer a compelling alternative to traditional approaches. Unlike GANs, which have dominated recent weather generation research, VAEs explicitly learn the training data distribution and enable controlled synthesis through their regularized latent space.</p>
+                <p>The key innovation lies in how the latent space is structured. By regularizing to a known distribution (typically Gaussian), we can map the relationship between latent coordinates and weather characteristics. Assuming extreme events in historical data are rare, we hypothesize they correspond to the tails of the latent distribution. This enables controlled synthesis toward more extreme scenarios by sampling from distribution tails.</p>
+                <p>The VAE architecture comprises an encoder parameterizing posterior distribution q(z|x), a prior distribution p(z), and a decoder with distribution p(x|z). Training balances reconstruction quality against latent space regularization, typically assuming Gaussian distributions to enable efficient gradient-based optimization.</p>
+            </div>
+
+            <div class="content-section">
+                <h3>Addressing Co-variance Challenges</h3>
+                <p>The critical advantage of the VAE approach is its capacity to encode spatial and temporal co-variance into the latent representation. Rather than generating each site independently and attempting to preserve correlations post-hoc, the model learns a joint distribution that naturally maintains these relationships.</p>
+                <p>For hydrological applications, this means the model can capture phenomena like orographic rainfall enhancement in the Hunua Ranges while simultaneously representing the drier conditions on Auckland's isthmus. The latent space implicitly encodes these spatial patterns, allowing synthesis that respects both local characteristics and inter-site dependencies.</p>
+                <p>Multi-variable co-variance presents additional complexity. Rainfall and PET are physically linked but exhibit non-linear relationships. The VAE framework can learn these dependencies within its latent representation, avoiding the need for explicit correlation modeling that often fails to capture extreme conditions where relationships break down.</p>
+            </div>
+
+            <div class="content-section">
+                <h3>Experimental Design & Results</h3>
+                <p>Testing utilized the CHIRPS dataset for Palghar, India, focusing on monsoon-period precipitation. The architecture employed two convolutional blocks for spatial feature extraction, followed by dense layers parameterizing the latent distribution. Sequences of 32 days across 32×32 pixel tiles provided sufficient temporal and spatial context.</p>
+                <p>Training used Adam optimization with a warm-up period before applying regularization, weighted using β-VAE criteria. The model was trained for 100 epochs with early stopping based on total loss convergence.</p>
+                <p>Quantile-quantile plots demonstrated the model's capacity to synthesize scenarios spanning from below-average to extreme precipitation. By systematically varying the sampling standard deviation in the latent space from 0.3 to 1.3, we generated distributions ranging from drought conditions to intense rainfall events.</p>
+                <p>Critically, the model maintained physical consistency. Synthesized fields exhibited realistic spatial patterns, temporal evolution, and intensity distributions. Visual inspection confirmed that samples from higher standard deviations showed characteristics consistent with extreme monsoon events observed in the historical record.</p>
+            </div>
+
+            <div class="content-section">
+                <h3>Implementation for Water Supply Modeling</h3>
+                <p>Adapting this approach for Auckland's water supply system requires several considerations. The model must handle New Zealand's temperate climate patterns, which differ significantly from monsoon regimes. Rainfall in the Waitakere and Hunua Ranges exhibits less pronounced seasonality but greater inter-annual variability.</p>
+                <p>The architecture would need modification to incorporate multiple catchments simultaneously. Rather than a single 32×32 tile, the encoder must process data from spatially separated regions while learning their correlations. This likely requires attention mechanisms or hierarchical encoding to capture both local patterns and large-scale atmospheric drivers.</p>
+                <p>Incorporating PET requires expanding the model to handle multiple variables with different statistical properties. Rainfall is intermittent and heavy-tailed; PET is continuous and follows more regular patterns. Multi-task learning frameworks within the VAE structure can accommodate these differences while preserving their physical relationships.</p>
+                <p>The temporal scale must extend beyond 32 days to capture drought events lasting 18-24 months, which drive system stress in Auckland. This may require conditional VAE architectures that can generate long sequences while maintaining temporal consistency and capturing persistence phenomena like blocking patterns.</p>
+            </div>
+
+            <div class="content-section">
+                <h3>Advantages Over Traditional Methods</h3>
+                <p>Compared to the delta-change method currently employed for Auckland's climate change impact assessment, the VAE approach offers several advantages. Delta methods apply statistical adjustments to observed records, preserving historical variability but assuming stationarity around an offset mean. They cannot capture projected changes in extreme event frequency or persistence.</p>
+                <p>The SCL tool, while effective for extending records, imposes the constraint mentioned earlier regarding spatial versus temporal co-variance. It also relies on statistical models that may not capture emerging patterns in non-stationary climate conditions.</p>
+                <p>VAEs learn complex, non-linear relationships directly from data, including GCM projections. The latent space provides interpretable control over synthesis, allowing systematic exploration of uncertainty in climate projections. Multiple GCM outputs can inform training, with the model learning to represent the ensemble distribution.</p>
+                <p>The framework naturally handles the challenge of downscaling. By training on both coarse GCM outputs and fine-resolution observations, the VAE can learn the downscaling transformation implicitly, avoiding the need for separate statistical or dynamical downscaling steps.</p>
+            </div>
+
+            <div class="content-section">
+                <h3>Limitations & Future Directions</h3>
+                <p>Current work faces several challenges. Training VAEs on climate data requires careful hyperparameter tuning, particularly the balance between reconstruction fidelity and latent regularization. Too much regularization produces unrealistic samples; too little prevents controlled synthesis.</p>
+                <p>The assumption that extreme events map to distribution tails is intuitive but requires validation. Some extreme events may result from unique combinations of typical conditions rather than rare states in the latent space. This requires careful analysis of the learned representations.</p>
+                <p>Computational demands are substantial. Training on long time series across multiple sites with sufficient spatial resolution requires significant GPU resources. This limits the number of experiments possible during model development and may constrain operational deployment.</p>
+                <p>Future work should explore conditional VAE architectures that explicitly incorporate GCM outputs as conditioning variables. This would enable direct generation of scenarios for specific emissions pathways and time horizons while maintaining physical consistency.</p>
+                <p>Hybrid approaches combining VAEs with process-based hydrological models merit investigation. The VAE could generate meteorological forcing, which then drives calibrated rainfall-runoff models. This preserves the benefits of physically-based modeling while overcoming input data limitations.</p>
+                <p>Extending to multi-variable generation with explicit physical constraints represents another frontier. Incorporating known relationships (such as the Clausius-Clapeyron relation between temperature and atmospheric moisture capacity) could improve realism while reducing data requirements.</p>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>© 2025 Martin Wright. All rights reserved.</p>
+    </footer>
+</body>
+</html>
