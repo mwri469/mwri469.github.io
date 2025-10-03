@@ -97,7 +97,7 @@ nav a.active {
 .paper-box {
     border: 1px solid #d4cdb8;
     background-color: #faf9f4;
-    padding: 25px;
+    padding: 20px;
     margin-top: 12px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
 }
@@ -122,11 +122,31 @@ footer {
     color: #666;
 }
 
-a {
-    color: #B05730;
-    text-decoration: none;
-}
-
 a:hover {
     text-decoration: underline;
+}
+
+/* Media asset styling with super square look and shadow */
+.media-asset {
+    border: 3px solid #1a1a1a;
+    background-color: #faf9f4;
+    padding: 0;
+    box-shadow: 8px 8px 0px rgba(0, 0, 0, 1);
+    display: block;
+    max-width: 100%;
+    overflow: hidden;
+    margin-bottom: 30px;
+}
+
+.media-asset img,
+.media-asset video {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+/* Profile photo specific styling */
+.profile-photo {
+    max-width: 300px;
+    margin-bottom: 30px;
 }
