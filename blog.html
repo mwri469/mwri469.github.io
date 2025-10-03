@@ -1,1 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Martin Wright - Research</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%23F0EEE5'/><text x='50' y='72' font-size='70' font-family='IBM Plex Mono,monospace' text-anchor='middle' fill='%23B05730'>μ</text></svg>">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <h1>Martin Wright</h1>
+        <nav>
+            <a href="index.html" class="active">Home</a>
+            <a href="blog.html", class="active">Research</a>
+            <a href="#">Experience</a>
+            <a href="aboutme.html" class="active">About</a>
+        </nav>
+    </header>
 
+    <main>
+
+        <section class="research-section">
+            <!-- <h2 class="research-heading">Recent Research</h2> -->
+
+            <div class="research-item">
+                <a href="research/lstm-drone-scheduling.html" class="research-link">
+                    <div class="research-title">LSTM Drone Scheduling Model</div>
+                    <div class="research-date">November 2024</div>
+                    <div class="research-description">
+                        This report details the development of a dual Long Short-Term Memory (LSTM) neural network model to optimize drone-based coastal surveys for marine species monitoring, which are frequently hampered by adverse weather. Trained on historical time-series data, the model forecasts conditions at two sites and uses a weighted policy to recommend the better location for drone flights, minimizing wasted efforts and improving the effectiveness of ecological data collection.
+                    </div>
+                </a>
+            </div>
+
+            <div class="research-item">
+                <a href="research/semantic-caching.html" class="research-link">
+                    <div class="research-title">Intelligent Semantic Caching for Video Surveillance Systems</div>
+                    <div class="research-date">February 2025</div>
+                    <div class="research-description">
+                        This paper introduces a novel hybrid framework for semantic video retrieval and localized caching in surveillance systems. This approach employs a two-tiered computer vision strategy using a real-time YOLO model deployed at the network edge combined with OpenAI's CLIP, where embeddings are generated to capture rich, high-dimensional zero-shot semantic content. These embeddings are then synchronized with a cloud-based vector database to establish a semantically indexed reservoir for query processing. Finally, we leverage a Large Language Model (LLM) augmented with Retrieval-Augmented Generation (RAG) to process natural language queries and index cached frames.
+                    </div>
+                </a>
+            </div>
+
+            <div class="research-item">
+                <a href="research/vae-gan-rainfall-sim.html" class="research-link">
+                    <div class="paper-box">
+                        <div class="research-title">VAE-GAN for Hydrological Stochastic Generation</div>
+                        <div class="research-date">October 2025</div>
+                        <div class="research-description">
+                            Contemporary methods for stochastically generating climate-change impacted rainfall patterns involve site-based stochastic methods. This paper builds on recent IBM Research methods using VAE models to better model co-variant rainfall patterns by using a prior-posterior sampling method based on latent space.
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+            <div class="research-item">
+                <div class="research-title">Uncertainty Quantification in Deep Neural Networks</div>
+                <div class="research-date">January 28, 2024</div>
+                <div class="research-description">
+                    A framework for reliable uncertainty estimation in deep learning models that enables safe deployment in high-stakes applications. We demonstrate improved calibration and out-of-distribution detection across medical imaging and autonomous systems.
+                </div>
+            </div>
+
+            <div class="research-item">
+                <div class="paper-box">
+                    <div class="research-title">Meta-Learning for Few-Shot Domain Adaptation</div>
+                    <div class="research-date">November 5, 2023</div>
+                    <div class="research-description">
+                        We present a meta-learning approach that enables rapid adaptation to new domains with only a handful of examples. Our method combines gradient-based meta-learning with domain-invariant feature extraction, achieving significant improvements over traditional transfer learning approaches in low-data regimes.
+                    </div>
+                </div>
+            </div>
+
+            <div class="research-item">
+                <div class="research-title">Interpretable Deep Learning through Concept Bottlenecks</div>
+                <div class="research-date">September 18, 2023</div>
+                <div class="research-description">
+                    An architecture that forces model predictions to go through human-interpretable concepts, making deep learning models transparent and debuggable while maintaining competitive accuracy on complex tasks.
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>© 2025 Martin Wright. All rights reserved.</p>
+    </footer>
+</body>
+</html>
