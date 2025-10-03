@@ -44,7 +44,7 @@
 
             <div class="content-section">
                 <h3>Methodology</h3>
-                <p>We developed a dual LSTM architecture that processes historical time-series data from two coastal monitoring sites simultaneously. Each LSTM network learns site-specific weather patterns including wind speed, precipitation, visibility, and wave height.</p>
+                <p>We developed a dual LSTM architecture that processes historical time-series data from two coastal monitoring sites simultaneously. Each LSTM network learns site-specific weather patterns including wind speed, precipitation and solar irradiation.</p>
                 <p>The model architecture consists of:</p>
                 <ul>
                     <li>Parallel LSTM encoders for each site (128 hidden units)</li>
@@ -52,7 +52,7 @@
                     <li>Fusion layer combining site forecasts</li>
                     <li>Policy network outputting site recommendation and confidence score</li>
                 </ul>
-                <p>Training data spanned over 40 years of hourly weather observations, with careful handling of missing data and seasonal normalization.</p>
+                <p>Training data spanned over 40 years of hourly weather observations, with careful handling of missing data.</p>
             </div>
 
             <div class="content-section">

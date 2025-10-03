@@ -275,9 +275,10 @@ a:hover {
     padding: 0;
     box-shadow: 8px 8px 0px rgba(0, 0, 0, 1);
     display: block;
-    max-width: 100%;
+    max-width: 70%;
     overflow: hidden;
     margin-bottom: 30px;
+    alignment-baseline: center;
 }
 
 .media-asset img,
@@ -294,7 +295,7 @@ a:hover {
 }
 
 .paper-fig {
-    max-width: 600px;
+    max-width: 800px;
     margin-bottom: 30px;
     align-content: center;
 }
