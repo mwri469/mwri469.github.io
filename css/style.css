@@ -1,0 +1,132 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Georgia', 'Times New Roman', serif;
+    background-color: #F0EEE5;
+    color: #2c2c2c;
+    line-height: 1.25;
+    padding: 60px 80px;
+    min-width: 1200px;
+}
+
+header {
+    margin-bottom: 20px;
+}
+
+h1 {
+    font-size: 36px;
+    font-weight: 400;
+    margin-bottom: 10px;
+    color: #1a1a1a;
+}
+
+nav {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+nav a {
+    color: #1a1a1a;
+    text-decoration: none;
+    margin-right: 30px;
+    font-size: 16px;
+    padding-bottom: 5px;
+    border-bottom: 2px solid transparent;
+    transition: border-color 0.2s;
+}
+
+nav a:hover {
+    border-bottom-color: #B05730;
+}
+
+nav a.active {
+    border-bottom-color: #1a1a1a;
+}
+
+.intro {
+    font-size: 16px;
+    line-height: 1.8;
+    max-width: 900px;
+    margin-bottom: 20px;
+}
+
+.research-section {
+    max-width: 800px;
+}
+
+.research-item {
+    margin-bottom: 20px;
+    position: relative;
+    padding-left: 30px;
+}
+
+.research-item::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 8px;
+    width: 12px;
+    height: 12px;
+    background-color: #1a1a1a;
+    border-radius: 50%;
+}
+
+.research-title {
+    font-size: 12px;
+    font-weight: 600;
+    color: #1a1a1a;
+    margin-bottom: 8px;
+}
+
+.research-date {
+    font-size: 10px;
+    color: #666;
+    margin-bottom: 12px;
+}
+
+.research-description {
+    font-size: 10px;
+    line-height: 1.7;
+    color: #3c3c3c;
+}
+
+.paper-box {
+    border: 1px solid #d4cdb8;
+    background-color: #faf9f4;
+    padding: 25px;
+    margin-top: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.paper-box .research-title {
+    color: #B05730;
+    font-size: 14px;
+}
+
+.research-heading {
+    font-size: 28px;
+    color: #B05730;
+    margin-bottom: 20px;
+    font-weight: 400;
+}
+
+footer {
+    margin-top: 100px;
+    padding-top: 40px;
+    border-top: 1px solid #d4cdb8;
+    font-size: 14px;
+    color: #666;
+}
+
+a {
+    color: #B05730;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
