@@ -30,6 +30,11 @@ h1 {
     color: #1a1a1a;
 }
 
+h2 {
+    font-weight: 400;
+    margin-bottom: 15px;
+}
+
 nav {
     margin-top: 20px;
     margin-bottom: 20px;
@@ -58,6 +63,19 @@ nav a.active {
     line-height: 1.8;
     max-width: 900px;
     margin-bottom: 20px;
+}
+
+.contact {
+    font-size: 16px;
+    line-height: 1.8;
+    max-width: 900px;
+    margin-bottom: 15px;
+}
+
+.paper-body {
+    max-width: none;
+    padding: 5px;
+    margin-bottom: 5px;
 }
 
 .research-section {
@@ -185,6 +203,9 @@ nav a.active {
     grid-template-columns: 1fr 1fr;
     gap: 60px;
     margin-top: 40px;
+    margin-bottom: 40px;
+    padding-bottom: 20px;
+    border-bottom: 2px solid #d4cdb8;
 }
 
 .content-section {
@@ -265,4 +286,10 @@ a:hover {
 .profile-photo {
     max-width: 300px;
     margin-bottom: 30px;
+}
+
+.paper-fig {
+    max-width: 600px;
+    margin-bottom: 30px;
+    align-content: center;
 }

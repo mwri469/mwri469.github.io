@@ -32,13 +32,14 @@
             <div class="research-abstract">
                 This report details the development of a dual Long Short-Term Memory (LSTM) neural network model to optimize drone-based coastal surveys for marine species monitoring, which are frequently hampered by adverse weather. Trained on historical time-series data, the model forecasts conditions at two sites and uses a weighted policy to recommend the better location for drone flights, minimizing wasted efforts and improving the effectiveness of ecological data collection.
             </div>
+
         </div>
 
         <div class="research-content">
             <div class="content-section">
                 <h3>Problem Statement</h3>
                 <p>Marine species monitoring through drone-based coastal surveys faces a critical challenge: adverse weather conditions frequently disrupt planned operations, leading to wasted resources and incomplete data collection. Traditional scheduling approaches rely on static weather forecasts that often fail to account for site-specific microclimates and temporal patterns.</p>
-                <p>The need for a more intelligent, data-driven approach to scheduling became apparent after analyzing historical survey data, which revealed that weather-related cancellations occurred in 40% of scheduled flights, with significant variations between monitoring sites.</p>
+                <p>The need for a more intelligent, data-driven approach to scheduling became apparent after spending time with the Biological Sciences team, which revealed that weather-related cancellations occurred in a great deal of scheduled flights, with significant variations between monitoring sites.</p>
             </div>
 
             <div class="content-section">
@@ -51,7 +52,7 @@
                     <li>Fusion layer combining site forecasts</li>
                     <li>Policy network outputting site recommendation and confidence score</li>
                 </ul>
-                <p>Training data spanned 3 years of hourly weather observations, with careful handling of missing data and seasonal normalization.</p>
+                <p>Training data spanned over 40 years of hourly weather observations, with careful handling of missing data and seasonal normalization.</p>
             </div>
 
             <div class="content-section">
@@ -80,6 +81,30 @@
             </div>
         </div>
     </main>
+
+    <div class="paper-body">
+        <p>Artificial Neural Networks (ANNs) have gained popularity due to their ability to capture nonlinear relationships. Recurrent Neural Networks (RNNs), particularly Long Short-Term Memory (LSTM) networks, are especially suited for time-series forecasting because of their ability to capture dependencies over long time horizons. LSTMs address the vanishing gradient problem seen in traditional RNNs, enabling them to model complex, long-range temporal patterns that are characteristic of weather systems. While ANNs provide a flexible and powerful forecasting tool, they require large amounts of data and significant computational resources for training.</p>
+    </div>
+
+    <div class="paper-body">
+        <p>Traditional deep neural network, are designed to handle static input data by processing it through multiple layers of perceptrons. However, they are not well suited to model sequential or time-series data. This is where Recurrent Neural Networks (RNNs) come into play. RNNs are designed to recognise patterns in sequences by maintaining a form of memory through their hidden states, which allows them to better predict based on sequential movements.</p>
+    </div>
+
+    <div class="paper-body">
+        <p>The figure below illustrates how the RNN architecture works to predict sequential data. A input is passed through the model, f(x), and produces a prediction. This prediction is then fed back into f(x) to influence the prediction of following points.</p>
+    </div>
+
+    <div class="media-asset paper-fig">
+        <img src="../images/RNN.png">
+    </div>
+
+    <div class="paper-body">
+        <p>However, standard RNNs face challenges such as vanishing and exploding gradients during training, which can hinder their ability to learn long-term patterns. The Long Short-Term Memory (LSTM) network, initially introduced by Hochreiter and Schmidhuber, addresses these issues by introducing a specialised architecture that includes memory cells and gating mechanisms. Within LSTM cells are three types of gates: input gates, forget gates, and output gates. They are used to regulate the flow of information into, out of, and within the memory cells. This architecture is what allows LSTMs to maintain and update information over long sequences, making them particularly effective for tasks involving long-term dependencies.</p>
+    </div>
+
+    <div class="media-asset paper-fig"> 
+        <img src="../images/lstmcell.png" >
+    </div>
 
     <footer>
         <p>© 2025 Martin Wright. All rights reserved.</p>
