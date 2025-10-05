@@ -85,6 +85,8 @@ nav a.active {
 
 .research-section {
     max-width: 800px;
+    border-bottom: 1px solid #d4cdb8;
+    margin-bottom: 20px;
 }
 
 .research-item {
