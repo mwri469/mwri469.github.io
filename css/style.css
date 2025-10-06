@@ -85,7 +85,6 @@ nav a.active {
 
 .research-section {
     max-width: 800px;
-    border-bottom: 1px solid #d4cdb8;
     margin-bottom: 20px;
 }
 
@@ -263,7 +262,6 @@ footer {
     padding-top: 40px;
     border-top: 1px solid #d4cdb8;
     font-size: 14px;
-    color: #666;
 }
 
 a:hover {
