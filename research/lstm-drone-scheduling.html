@@ -48,7 +48,6 @@
                 <p>The model architecture consists of:</p>
                 <ul>
                     <li>Parallel LSTM encoders for each site (128 hidden units)</li>
-                    <li>Attention mechanism to weight recent observations</li>
                     <li>Fusion layer combining site forecasts</li>
                     <li>Policy network outputting site recommendation and confidence score</li>
                 </ul>
@@ -59,12 +58,11 @@
                 <h3>Results</h3>
                 <p>The model achieved significant improvements in scheduling efficiency:</p>
                 <ul>
-                    <li>Weather forecast accuracy (24-hour horizon): 64% for the Ōmaha Lagoon site, 57% for the Pt. Chevalier site</li>
-                    <li>Optimal site selection accuracy: 73% when tested against ground truth data</li>
-                    <li>Average confidence score for recommendations: 0.78</li>
+                    <li>To obtain the accuracy of the model at predicting the more favourable location under the specified recommendation policy, the predicted and actual outcomes were derived from the validation dataset.</li>
+                    <li>From this, the models performed at an accuracy of 68.07%</li>
+                    <li>This represents a 36% advantage over picking a site at average</li>
                 </ul>
-                <p>The weighted policy network learned to favor Site A during morning hours when offshore winds are calmer, and Site B during afternoon periods when coastal conditions stabilize. This nuanced understanding of site-specific patterns was not evident in traditional forecasting approaches.</p>
-            </div>
+                </div>
 
             <div class="content-section">
                 <h3>Impact & Future Work</h3>

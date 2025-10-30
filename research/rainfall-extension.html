@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stochastic Rainfall Extension for Auckland Water Supply - Martin Wright</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%23F0EEE5'/><text x='50' y='72' font-size='70' font-family='IBM Plex Mono,monospace' text-anchor='middle' fill='%23B05730'>μ</text></svg>">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="research-detail">
+    <header>
+        <h1>Martin Wright</h1>
+        <nav>
+            <a href="../index.html" class="active">Home</a>
+            <a href="../blog.html" class="active">Research</a>
+            <a href="#">Experience</a>
+            <a href="../aboutme.html" class="active">About</a>
+        </nav>
+    </header>
+
+    <main class="research-detail-page">
+
+        <div class="research-detail-header">
+            <h2>Stochastic Rainfall Extension for Auckland's Water Supply</h2>
+            <div class="research-meta">
+                <span>October 2025</span>
+                <span>Extreme Value Theory • Hydrology • Statistical Modeling</span>
+            </div>
+            <div class="research-abstract">
+                A novel approach to extending short climate records using extreme value theory and conditional probability modeling. This method extends 52-year Virtual Climate Station rainfall records to 170+ years by leveraging historical gauge data, operating at the 19-month timescale critical for drought characterization. The approach combines Generalised Pareto Distribution tail modeling with empirical resampling and analog pattern matching to preserve both extreme event characteristics and seasonal variability.
+            </div>
+        </div>
+
+        <div class="research-content">
+            <div class="content-section">
+                <h3>Background & Motivation</h3>
+                <p>Auckland's water supply system relies on ten reservoirs across the Hunua and Waitakere Ranges, supplemented by the Waikato River source. While the ranges have exceptional observational records dating back to 1853, the Virtual Climate Station Network only extends from 1972 to present. This 52-year record is insufficient for characterizing rare drought events and extreme rainfall that drive water security planning.</p>
+                <p>The fundamental challenge is extending these short records while preserving the statistical characteristics essential for hydrological modeling. Previous approaches using the Stochastic Climate Library produced good results but operated at shorter timescales and did not explicitly condition on the long historical observations. The critical timescale for Auckland's system is 18-24 months, the duration of droughts that stress reservoir storage.</p>
+            </div>
+
+            <div class="content-section">
+                <h3>Methodological Framework</h3>
+                <p>The method operates at the 19-month rolling sum scale to directly capture drought persistence. For each Virtual Climate Station (Upper Waikato, Lower Waikato, Waipa River), the distribution of 19-month totals is modeled using a piecewise approach. The bulk of the distribution uses empirical resampling from observed non-extreme values, avoiding the systematic biases that parametric distributions introduce when modeling mid-range rainfall. The tail is represented by a Generalised Pareto Distribution fitted to exceedances above the 85th percentile threshold.</p>
+                <p>The critical innovation lies in how temporal structure is preserved. Rather than sampling independently, the method extracts an extremeness score from the Hunua and Waitakere gauge records based on percentile rank of their 19-month rolling sums. This score ranges from zero to one and provides a temporal template of wet and dry periods throughout the historical record. When the gauges show extreme conditions, the probability of sampling from the tail distribution at all virtual stations increases proportionally, creating realistic covariance while each site maintains its own statistical characteristics.</p>
+                <p>Random noise is added to prevent perfect correlation, reflecting the spatial independence between gauge and virtual station locations. The probability of extreme sampling is modulated through p = p_base × (0.5 + extremeness + ε), where ε follows a Gaussian distribution with standard deviation 0.2. This ensures that when historical gauges experienced exceptional drought or rainfall, the extended records reflect similar extremeness while sampling from site-specific distributions.</p>
+            </div>
+
+            <div class="content-section">
+                <h3>Disaggregation Through Analog Resampling</h3>
+                <p>Disaggregating 19-month totals to monthly values presented a significant challenge. Initial approaches using proportional scaling from climatological means over-smoothed the results, producing records with insufficient month-to-month variability. The solution employs analog pattern resampling, a technique that preserves natural rainfall structure.</p>
+                <p>For each simulated 19-month total, the method searches the VCSN record for similar periods within 70-130% of the target value, with preference for seasonally similar patterns. The actual monthly sequence from that analog period is extracted and scaled proportionally to match the simulated total exactly. This preserves the natural clustering of wet and dry months, the intensity of individual extreme months, and the seasonal characteristics of the rainfall regime.</p>
+                <p>The monthly values are then disaggregated to daily using VCSN climatology. Daily proportions are calculated as the typical fraction of monthly rainfall occurring on each day, derived from the full VCSN record. These proportions are applied to the simulated monthly totals, with normalization to ensure conservation of mass. For the VCSN period itself (1972 onward), original daily values are retained.</p>
+            </div>
+
+            <!-- <div class="content-section">
+                <h3>Statistical Performance</h3>
+                <p>Validation against both the original VCSN data and the Stochastic Climate Library method demonstrates strong performance across return periods. Return period curves for 19-month rolling sums show close agreement from annual events through millennial extremes. The method successfully avoids the mid-range overestimation that plagued earlier parametric approaches, while the GPD tail provides appropriate extrapolation beyond observed data.</p>
+                <p>Time series inspection reveals preservation of realistic temporal structure. The extended records exhibit variability comparable to both the VCSN data and historical gauge records. Seasonal patterns are maintained through the analog resampling approach, with winter-dominant rainfall in the ranges and more uniform distribution at lower elevations properly represented.</p>
+                <p>Cross-correlation between sites shows appropriate covariance structure. The three Waikato stations exhibit realistic correlation through their shared temporal conditioning, while maintaining site-specific characteristics in terms of mean rainfall, extreme magnitudes, and seasonal distribution. This balance between spatial dependence and local characteristics is critical for system-wide yield assessment.</p>
+            </div>
+
+            <div class="content-section">
+                <h3>Implementation Considerations</h3>
+                <p>The method was implemented in Python using scipy for statistical distributions, pandas for data manipulation, and numpy for numerical operations. The modular structure separates model fitting, temporal structure extraction, simulation, and disaggregation into distinct functions. This enables easy modification of thresholds, noise parameters, or analog matching criteria without restructuring the entire workflow.</p>
+                <p>Computational requirements are modest. Model fitting requires only minutes on standard hardware, as the GPD fitting and empirical distribution storage are straightforward operations. Simulation of the 120-year extension period takes under an hour for all three stations. The disaggregation step is the most computationally intensive due to the analog search, but parallelization across simulated months would provide linear speedup if needed.</p>
+                <p>The threshold choice of 85th percentile represents a balance between empirical and parametric modeling. Lower thresholds assign more data to the GPD tail, which can improve extreme value estimates but requires sufficient exceedances for stable fitting. Higher thresholds leave more data for empirical resampling but may underestimate the most extreme events. Sensitivity analysis around this choice shows robust performance within the 80-90th percentile range.</p>
+            </div>
+
+            <div class="content-section">
+                <h3>Limitations & Future Directions</h3>
+                <p>The method assumes stationarity in the relationship between the ranges and virtual stations throughout the historical period. Climate change impacts are not explicitly modeled in the extension, though the approach could be adapted by fitting separate distributions to different time periods or incorporating trend terms. The fundamental challenge is that historical observations may not fully represent future conditions under changing climate.</p>
+                <p>Spatial correlation is simplified through the shared temporal structure. While this captures the dominant mode of covariance (regional wet and dry periods), it does not represent cases where weather systems affect sites differently. More sophisticated approaches using copulas or spatial process models could improve this aspect, at the cost of increased complexity and data requirements.</p>
+                <p>The GPD extrapolation beyond observed extremes carries inherent uncertainty. Events more extreme than the 52-year VCSN record are modeled but not validated. Incorporating regional climate model outputs or other proxy data could provide additional constraints on tail behavior, though reconciling different data sources introduces its own challenges.</p>
+                <p>Future work should explore conditional VAE architectures that could learn the full spatial-temporal structure from data, potentially capturing more complex dependencies than the current statistical approach. Hybrid methods combining the interpretability of extreme value theory with the flexibility of deep learning represent a promising direction for stochastic climate modeling.</p>
+            </div> -->
+        </div>
+    </main>
+
+    <h3>Results</h3>
+
+    <div class="paper-body">
+        <p>The following plots show the 19-month rainfall return periods for the locations of interest</p>
+    </div>
+
+    <div class="media-asset paper-fig">
+        <img src="../images/ReturnPeriods.png">
+    </div>
+
+    <div class="paper-body">
+        <p>What is of note is the bias to underestimate the returns on the tails of the distribution. This is an aspect of the project that will need future work.</p>
+        <p>Plotted also is a single-site comparison with the real gauge of interest. The Lower Waikato & Hunua Ranges sites are the closest geographically, so it is important that they show the most temporal covariance.</p>
+    </div>
+
+    <div class="media-asset paper-fig">
+        <img src="../images/LWtimeseries.png">
+    </div>
+
+    <div class="paper-body">
+        <p>Where the successes of this project lie are the correlations in extreme down periods. Take, for example, the initial 1860 shock as well as the late 1870s shock, where the new method correlates very well.</p>
+        <p>Furthermore, the more temperate action of the Lower Waikato site remains while some big shock periods where the GPD distribution kicks in are introduced.</p>
+    </div>
+    
+    <footer>
+        <p>© 2025 Martin Wright. All rights reserved.</p>
+    </footer>
+</body>
+</html>
