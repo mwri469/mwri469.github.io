@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coastal Camera Image Processing - Martin Wright</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%23F0EEE5'/><text x='50' y='72' font-size='70' font-family='IBM Plex Mono,monospace' text-anchor='middle' fill='%23B05730'>μ</text></svg>">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+        onload="renderMathInElement(document.body, {delimiters: [{left: '$$', right: '$$', display: true},{left: '$', right: '$', display: false}]});"></script>
+</head>
+<body class="research-detail">
+    <header>
+        <h1>Martin Wright</h1>
+        <nav>
+            <a href="../index.html" class="active">Home</a>
+            <a href="../blog.html" class="active">Research</a>
+            <a href="#">Experience</a>
+            <a href="../aboutme.html" class="active">About</a>
+        </nav>
+    </header>
+
+    <main class="research-detail-page">
+
+        <div class="research-detail-header">
+            <h2>Coastal Camera Image Processing</h2>
+            <div class="research-meta">
+                <span>July 2026</span>
+                <span>Computer Vision • Coastal Engineering • Image Processing</span>
+            </div>
+            <div class="research-abstract">
+                Development of Python-based image processing tools for Auckland Council's nine-camera coastal monitoring network. The system transforms oblique time-lapse imagery into geo-referenced orthographic plan-view products using the pinhole camera model, robust homography estimation for frame stabilisation, and backward-warped rectification onto surveyed ground control. Temporal pixel instruments extracted from rectified imagery enable quantitative measurement of beach morphology change.
+            </div>
+        </div>
+
+        <div class="research-content">
+            <div class="content-section">
+                <h3>Background</h3>
+                <p>Auckland Council operates nine Obscape time-lapse cameras along the east coast from Te Arai to Waiheke Island, capturing hourly imagery transmitted via GSM. The existing image-processing ecosystem (MATLAB-based Argus tools and the CoastSnap citizen-science platform) presented barriers to operational use: licensing costs, complexity, and unsuitability for fixed-camera networks.</p>
+                <p>This project delivers standalone Python tools that exploit the fixed geometry of the Obscape installations. Because the cameras do not move between frames, the intrinsic and extrinsic calibration can be solved once from surveyed ground control points and applied to all subsequent imagery without re-estimation.</p>
+            </div>
+
+            <div class="content-section">
+                <h3>The Pinhole Camera Model</h3>
+                <p>The projection of a 3D world point $\mathbf{X} = [X, Y, Z, 1]^T$ onto a 2D image point $\mathbf{x} = [u, v, 1]^T$ is modelled by the $3 \times 4$ projection matrix:</p>
+                <p>$$\mathbf{x} = P\,\mathbf{X} = K\,[R \mid \mathbf{t}]\,\mathbf{X}$$</p>
+                <p>where $K$ is the $3 \times 3$ intrinsic matrix encoding focal length and principal point:</p>
+                <p>$$K = \begin{bmatrix} f_x & 0 & c_{0u} \\ 0 & f_y & c_{0v} \\ 0 & 0 & 1 \end{bmatrix}$$</p>
+                <p>and $[R \mid \mathbf{t}]$ encodes the camera's 6-DOF pose — three Euler angles (azimuth, tilt, swing via ZXZ convention) and a 3D position in NZTM2000 coordinates.</p>
+            </div>
+
+            <div class="content-section">
+                <h3>Lens Distortion</h3>
+                <p>Real lenses deviate from ideal pinhole projection. The Caltech distortion model corrects for radial and tangential aberrations in normalised camera coordinates $(x_n, y_n)$:</p>
+                <p>$$f_r = 1 + d_1 r^2 + d_2 r^4 + d_3 r^6$$</p>
+                <p>where $r^2 = x_n^2 + y_n^2$. Tangential components model decentring:</p>
+                <p>$$\Delta x = 2t_1 x_n y_n + t_2(r^2 + 2x_n^2)$$</p>
+                <p>$$\Delta y = t_1(r^2 + 2y_n^2) + 2t_2 x_n y_n$$</p>
+                <p>The final distorted pixel coordinate is then $u_d = (x_n f_r + \Delta x)\,f_x + c_{0u}$. The full intrinsics vector stores 11 parameters: image dimensions, principal point, focal lengths, and five distortion coefficients.</p>
+            </div>
+
+            <div class="content-section">
+                <h3>Image Stabilisation</h3>
+                <p>Despite being fixed installations, cameras experience small perturbations from wind, thermal expansion, and maintenance. Frame-to-frame alignment uses a robust homography pipeline:</p>
+                <p>$$\mathbf{x}' = H\,\mathbf{x}$$</p>
+                <p>where $H$ is a $3 \times 3$ projective transformation estimated from matched feature correspondences. The pipeline extracts SIFT keypoints under CLAHE equalisation, matches via FLANN KD-trees with Lowe's ratio test ($\tau = 0.65$), and estimates $H$ using MAGSAC++ with 10,000 iterations at 99.9% confidence.</p>
+                <p>Quality gating rejects frames with fewer than 15 inliers or condition number $\sigma_{\max}/\sigma_{\min} > 10^6$. Failed frames are interpolated from temporal neighbors to maintain continuity.</p>
+            </div>
+        </div>
+
+        <!-- Pinhole Camera Model Diagram -->
+        <h3>Projection Geometry</h3>
+
+        <div class="paper-body">
+            <p>The diagram below illustrates the pinhole projection from a 3D world point through the camera's optical centre onto the image plane. Ground control points (GCPs) surveyed in NZTM2000 coordinates provide the known correspondences needed to solve for the extrinsic parameters via Levenberg-Marquardt optimisation.</p>
+        </div>
+
+        <div style="max-width:750px; margin: 20px auto 40px auto;">
+            <svg viewBox="0 0 750 320" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;font-family:'IBM Plex Mono',monospace;">
+                <!-- Image plane -->
+                <rect x="180" y="60" width="120" height="180" fill="none" stroke="#1a1a1a" stroke-width="2" rx="2"/>
+                <text x="240" y="52" text-anchor="middle" font-size="11" fill="#666">Image plane</text>
+                <!-- Principal point -->
+                <circle cx="240" cy="150" r="3" fill="#B05730"/>
+                <text x="254" y="146" font-size="10" fill="#B05730">(c₀ᵤ, c₀ᵥ)</text>
+                <!-- Camera centre -->
+                <circle cx="80" cy="150" r="5" fill="#1a1a1a"/>
+                <text x="80" y="175" text-anchor="middle" font-size="11" fill="#1a1a1a">O</text>
+                <!-- Focal length arrow -->
+                <line x1="80" y1="150" x2="180" y2="150" stroke="#B05730" stroke-width="1.5" stroke-dasharray="4 3"/>
+                <text x="130" y="140" text-anchor="middle" font-size="10" fill="#B05730">f</text>
+                <!-- World point -->
+                <circle cx="620" cy="90" r="6" fill="#B05730"/>
+                <text x="635" y="87" font-size="11" fill="#1a1a1a">X = [X,Y,Z]ᵀ</text>
+                <!-- Ray from camera to world point -->
+                <line x1="80" y1="150" x2="620" y2="90" stroke="#1a1a1a" stroke-width="1" stroke-dasharray="6 3"/>
+                <!-- Projected point on image plane -->
+                <circle cx="218" cy="142" r="4" fill="#B05730"/>
+                <text x="205" y="132" font-size="10" fill="#B05730">x</text>
+                <!-- Ground plane -->
+                <line x1="350" y1="280" x2="700" y2="280" stroke="#d4cdb8" stroke-width="2"/>
+                <text x="525" y="298" text-anchor="middle" font-size="10" fill="#666">Ground plane (Z = 0)</text>
+                <!-- GCP markers -->
+                <circle cx="420" cy="280" r="4" fill="none" stroke="#B05730" stroke-width="2"/>
+                <circle cx="520" cy="280" r="4" fill="none" stroke="#B05730" stroke-width="2"/>
+                <circle cx="620" cy="280" r="4" fill="none" stroke="#B05730" stroke-width="2"/>
+                <text x="420" y="270" text-anchor="middle" font-size="9" fill="#B05730">GCP₁</text>
+                <text x="520" y="270" text-anchor="middle" font-size="9" fill="#B05730">GCP₂</text>
+                <text x="620" y="270" text-anchor="middle" font-size="9" fill="#B05730">GCP₃</text>
+                <!-- Rays to GCPs -->
+                <line x1="80" y1="150" x2="420" y2="280" stroke="#d4cdb8" stroke-width="1" stroke-dasharray="4 2"/>
+                <line x1="80" y1="150" x2="520" y2="280" stroke="#d4cdb8" stroke-width="1" stroke-dasharray="4 2"/>
+                <line x1="80" y1="150" x2="620" y2="280" stroke="#d4cdb8" stroke-width="1" stroke-dasharray="4 2"/>
+                <!-- Optical axis -->
+                <line x1="80" y1="150" x2="700" y2="150" stroke="#1a1a1a" stroke-width="0.5" stroke-dasharray="2 4"/>
+                <!-- Camera coordinate frame -->
+                <line x1="80" y1="150" x2="80" y2="110" stroke="#666" stroke-width="1"/>
+                <text x="72" y="105" font-size="9" fill="#666">y</text>
+                <line x1="80" y1="150" x2="120" y2="150" stroke="#666" stroke-width="1"/>
+                <text x="123" y="146" font-size="9" fill="#666">z</text>
+                <line x1="80" y1="150" x2="65" y2="165" stroke="#666" stroke-width="1"/>
+                <text x="58" y="172" font-size="9" fill="#666">x</text>
+                <!-- P matrix label -->
+                <text x="350" y="35" text-anchor="middle" font-size="12" font-weight="600" fill="#1a1a1a">x = K[R|t] X</text>
+            </svg>
+        </div>
+
+        <h3>Oblique-to-Plan Rectification</h3>
+
+        <div class="paper-body">
+            <p>The core value of the processing pipeline is transforming oblique camera views into metrically consistent plan-view imagery. Rather than computing a direct homography between image and ground (which assumes a planar scene), the system uses the full perspective projection model with a known ground elevation surface.</p>
+        </div>
+
+        <div class="paper-body">
+            <p>A regular grid of world coordinates $(X_i, Y_j, Z_{\text{ground}})$ is constructed in NZTM2000 at the surveyed beach elevation. Each grid node is projected forward through the calibrated camera model to obtain distorted pixel coordinates $(u_d, v_d)$. The rectified image is then constructed by <em>backward sampling</em> — each output pixel at grid location $(i,j)$ takes its colour from the oblique image at $(u_d, v_d)$ via bilinear interpolation:</p>
+        </div>
+
+        <div class="paper-body">
+            <p>$$I_{\text{rect}}(i,j) = I_{\text{oblique}}\big(u_d(X_i, Y_j),\; v_d(X_i, Y_j)\big)$$</p>
+        </div>
+
+        <div class="paper-body">
+            <p>This backward-mapping approach avoids holes in the output grid and naturally handles the variable ground-sample distance inherent to oblique viewing geometry — pixels near the camera map to small ground areas (high resolution) while pixels near the horizon span large distances (low resolution).</p>
+        </div>
+
+        <!-- Reference oblique image -->
+        <div class="media-asset paper-fig">
+            <img src="../images/coastal-oblique.png" alt="Oblique camera view from Orewa Beach showing the raw perspective captured by the Obscape camera">
+        </div>
+
+        <div class="paper-body">
+            <p>The oblique view above (Orewa Beach) illustrates the characteristic perspective compression of distant features. After rectification through the calibrated camera model, the same scene is projected to an orthographic plan-view with consistent spatial scale:</p>
+        </div>
+
+        <!-- Rectified timex image -->
+        <div class="media-asset paper-fig">
+            <img src="../images/coastal-timex.png" alt="Rectified plan-view temporal mean (timex) image of Orewa Beach showing consistent spatial scale">
+        </div>
+
+        <div class="paper-body">
+            <p>This temporal mean image (timex) averages all frames in a capture period after rectification. Wave action appears as a diffuse white band along the shoreline, while stable features (seawalls, rock platforms) remain sharp. The consistent ground-sample distance enables direct measurement of distances and areas.</p>
+        </div>
+
+        <h3>Stabilisation Assessment: Pixel Time Stacks</h3>
+
+        <div class="paper-body">
+            <p>A direct way to assess stabilisation quality is to extract a fixed pixel row from the oblique imagery at every timestep and stack these 1D slices vertically. The horizontal axis represents cross-shore pixel position, and the vertical axis is time. If stabilisation is working correctly, static features (seawalls, vegetation boundaries) appear as vertical lines — any horizontal drift would indicate residual camera motion:</p>
+        </div>
+
+        <!-- Transect pixel stack -->
+        <div class="media-asset paper-fig">
+            <img src="../images/coastal-transect-stack.png" alt="Cross-shore pixel time stack from stabilised oblique imagery at Takapuna Beach">
+        </div>
+
+        <div class="paper-body">
+            <p>The time stack above is sampled from the stabilised oblique sequence at Takapuna. Fixed features remain vertically coherent, confirming sub-pixel alignment across frames. The dynamic shoreline signal (the migrating bright-dark boundary) reflects real tidal excursion rather than camera jitter — demonstrating that the homography stabilisation preserves genuine coastal change while removing instrumental noise.</p>
+        </div>
+                </defs>
+            </svg>
+        </div>
+
+    </main>
+
+    <footer>
+        <p>© 2025 Martin Wright. All rights reserved.</p>
+    </footer>
+</body>
+</html>

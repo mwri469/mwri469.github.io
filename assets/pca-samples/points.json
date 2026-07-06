@@ -1010,7 +1010,7 @@
       "id": 1,
       "pcaNormX": -0.6409198641777039,
       "pcaNormY": -0.19985240697860718,
-      "label": "Heavy Widespread Rainfall",
+      "label": "Cluster 1",
       "imgSrc": "../assets/pca-samples/point-1.png",
       "dayIndex": 11496
     },
@@ -1018,7 +1018,7 @@
       "id": 2,
       "pcaNormX": -0.34752875566482544,
       "pcaNormY": -0.013775408267974854,
-      "label": "Above Average Rainfall",
+      "label": "Cluster 2",
       "imgSrc": "../assets/pca-samples/point-2.png",
       "dayIndex": 5281
     },
@@ -1026,7 +1026,7 @@
       "id": 3,
       "pcaNormX": -0.06888866424560547,
       "pcaNormY": 0.25489532947540283,
-      "label": "Moderate Rainfall",
+      "label": "Cluster 3",
       "imgSrc": "../assets/pca-samples/point-3.png",
       "dayIndex": 16373
     },
@@ -1034,7 +1034,7 @@
       "id": 4,
       "pcaNormX": 0.2364048957824707,
       "pcaNormY": -0.033573925495147705,
-      "label": "Below Average Rainfall",
+      "label": "Cluster 4",
       "imgSrc": "../assets/pca-samples/point-4.png",
       "dayIndex": 18215
     },
@@ -1042,7 +1042,7 @@
       "id": 5,
       "pcaNormX": 0.5020428895950317,
       "pcaNormY": -0.06522148847579956,
-      "label": "Dry Conditions",
+      "label": "Cluster 5",
       "imgSrc": "../assets/pca-samples/point-5.png",
       "dayIndex": 6547
     },
@@ -1050,7 +1050,7 @@
       "id": 6,
       "pcaNormX": 0.7535648345947266,
       "pcaNormY": -0.0240747332572937,
-      "label": "Drought / Very Dry",
+      "label": "Cluster 6",
       "imgSrc": "../assets/pca-samples/point-6.png",
       "dayIndex": 7323
     }
