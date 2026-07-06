@@ -83,25 +83,26 @@
         <div style="max-width:750px; margin: 20px auto 40px auto;">
             <svg viewBox="0 0 750 320" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;font-family:'IBM Plex Mono',monospace;">
                 <!-- Image plane -->
-                <rect x="180" y="60" width="120" height="180" fill="none" stroke="#1a1a1a" stroke-width="2" rx="2"/>
-                <text x="240" y="52" text-anchor="middle" font-size="11" fill="#666">Image plane</text>
-                <!-- Principal point -->
-                <circle cx="240" cy="150" r="3" fill="#B05730"/>
-                <text x="254" y="146" font-size="10" fill="#B05730">(c₀ᵤ, c₀ᵥ)</text>
+                <rect x="195" y="60" width="80" height="180" fill="#faf9f4" stroke="#1a1a1a" stroke-width="2" rx="2"/>
+                <text x="235" y="52" text-anchor="middle" font-size="11" fill="#666">Image plane</text>
+                <!-- Principal point (centre of image plane, where optical axis meets it) -->
+                <circle cx="235" cy="150" r="3" fill="#B05730"/>
+                <text x="250" y="165" font-size="10" fill="#B05730">(c₀ᵤ, c₀ᵥ)</text>
                 <!-- Camera centre -->
                 <circle cx="80" cy="150" r="5" fill="#1a1a1a"/>
                 <text x="80" y="175" text-anchor="middle" font-size="11" fill="#1a1a1a">O</text>
                 <!-- Focal length arrow -->
-                <line x1="80" y1="150" x2="180" y2="150" stroke="#B05730" stroke-width="1.5" stroke-dasharray="4 3"/>
-                <text x="130" y="140" text-anchor="middle" font-size="10" fill="#B05730">f</text>
+                <line x1="80" y1="150" x2="195" y2="150" stroke="#B05730" stroke-width="1.5" stroke-dasharray="4 3"/>
+                <text x="137" y="140" text-anchor="middle" font-size="10" fill="#B05730">f</text>
                 <!-- World point -->
                 <circle cx="620" cy="90" r="6" fill="#B05730"/>
                 <text x="635" y="87" font-size="11" fill="#1a1a1a">X = [X,Y,Z]ᵀ</text>
-                <!-- Ray from camera to world point -->
-                <line x1="80" y1="150" x2="620" y2="90" stroke="#1a1a1a" stroke-width="1" stroke-dasharray="6 3"/>
-                <!-- Projected point on image plane -->
-                <circle cx="218" cy="142" r="4" fill="#B05730"/>
-                <text x="205" y="132" font-size="10" fill="#B05730">x</text>
+                <!-- Ray from camera through projected point to world point -->
+                <line x1="80" y1="150" x2="620" y2="90" stroke="#1a1a1a" stroke-width="1.5" stroke-dasharray="6 3"/>
+                <!-- Projected point on image plane (ray intersection at x=235, centre of rect) -->
+                <!-- Ray: from (80,150) to (620,90). At x=235: t=(235-80)/(620-80)=155/540=0.287, y=150-60*0.287=133 -->
+                <circle cx="235" cy="133" r="4" fill="#B05730"/>
+                <text x="248" y="125" font-size="10" fill="#B05730">x</text>
                 <!-- Ground plane -->
                 <line x1="350" y1="280" x2="700" y2="280" stroke="#d4cdb8" stroke-width="2"/>
                 <text x="525" y="298" text-anchor="middle" font-size="10" fill="#666">Ground plane (Z = 0)</text>
@@ -180,14 +181,11 @@
         <div class="paper-body">
             <p>The time stack above is sampled from the stabilised oblique sequence at Takapuna. Fixed features remain vertically coherent, confirming sub-pixel alignment across frames. The dynamic shoreline signal (the migrating bright-dark boundary) reflects real tidal excursion rather than camera jitter — demonstrating that the homography stabilisation preserves genuine coastal change while removing instrumental noise.</p>
         </div>
-                </defs>
-            </svg>
-        </div>
 
     </main>
 
     <footer>
-        <p>© 2025 Martin Wright. All rights reserved.</p>
+        <p>&mu;</p>
     </footer>
 </body>
 </html>
