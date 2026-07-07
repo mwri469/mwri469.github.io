@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Martin Wright - About</title>
+    <title>Martin Wright - CV</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -14,27 +14,162 @@
     <header>
         <h1>Martin Wright</h1>
         <nav>
-            <a href="index.html", class="active">Home</a>
-            <a href="blog.html", class="active">Research</a>
-            <a href="#">Experience</a>
-            <a href="aboutme.html", class="active">About</a>
+            <a href="index.html">Home</a>
+            <a href="blog.html">Research</a>
+            <a href="experience.html">Experience</a>
+            <a href="aboutme.html" class="active">About</a>
         </nav>
     </header>
 
     <main>
+
+        <!-- Intro + Photo -->
         <section class="research-section">
             <div class="media-asset profile-photo">
                 <img src="images/photo.jpg" alt="Martin Wright">
             </div>
-
             <div class="intro">
                 <p>I am a researcher and engineer with a passion for solving complex problems at the intersection of machine learning, stochastics, and operations research. My work focuses on developing practical solutions that bridge theoretical advances with real-world applications.</p>
-                
-                <p style="margin-top: 20px;">Currently, I am exploring new methods in computer vision and deep learning, with particular interest in simulation, optimisation and meteorological applications. </p>
-                
-                <p style="margin-top: 20px;">When I'm not working as an engineer, I enjoy spending my time between surfing, tramping and raising my daughter. </p>
+                <p style="margin-top: 20px;">Currently, I am exploring new methods in computer vision and deep learning, with particular interest in simulation, optimisation and meteorological applications.</p>
+                <p style="margin-top: 20px;">When I'm not working as an engineer, I enjoy spending my time between surfing, tramping and raising my daughter.</p>
             </div>
         </section>
+
+        <!-- Domain Map -->
+        <section class="cv-section">
+            <h2 class="research-heading">domains</h2>
+            <div class="media-asset cv-diagram">
+                <svg viewBox="0 0 750 310" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;font-family:'IBM Plex Mono',monospace;">
+                    <!-- Edges -->
+                    <line x1="375" y1="46" x2="375" y2="165" stroke="#d4cdb8" stroke-width="1.5"/>
+                    <line x1="150" y1="115" x2="375" y2="165" stroke="#d4cdb8" stroke-width="1.5"/>
+                    <line x1="600" y1="115" x2="375" y2="165" stroke="#d4cdb8" stroke-width="1.5"/>
+                    <line x1="375" y1="165" x2="115" y2="240" stroke="#d4cdb8" stroke-width="1.5"/>
+                    <line x1="375" y1="165" x2="600" y2="240" stroke="#d4cdb8" stroke-width="1.5"/>
+                    <line x1="375" y1="165" x2="375" y2="285" stroke="#d4cdb8" stroke-width="1.5"/>
+                    <line x1="150" y1="115" x2="115" y2="240" stroke="#d4cdb8" stroke-width="1.5"/>
+                    <line x1="600" y1="115" x2="600" y2="240" stroke="#d4cdb8" stroke-width="1.5"/>
+
+                    <!-- Node: software engineering -->
+                    <rect x="295" y="33" width="160" height="26" fill="#faf9f4" stroke="#1a1a1a" stroke-width="1.5"/>
+                    <text x="375" y="46" text-anchor="middle" dominant-baseline="middle" font-size="11" fill="#2c2c2c">software engineering</text>
+
+                    <!-- Node: stochastic modelling -->
+                    <rect x="65" y="102" width="170" height="26" fill="#faf9f4" stroke="#1a1a1a" stroke-width="1.5"/>
+                    <text x="150" y="115" text-anchor="middle" dominant-baseline="middle" font-size="11" fill="#2c2c2c">stochastic modelling</text>
+
+                    <!-- Node: computer vision -->
+                    <rect x="525" y="102" width="150" height="26" fill="#faf9f4" stroke="#1a1a1a" stroke-width="1.5"/>
+                    <text x="600" y="115" text-anchor="middle" dominant-baseline="middle" font-size="11" fill="#2c2c2c">computer vision</text>
+
+                    <!-- Node: machine learning (accent) -->
+                    <rect x="300" y="152" width="150" height="26" fill="#B05730" stroke="#1a1a1a" stroke-width="1.5"/>
+                    <text x="375" y="165" text-anchor="middle" dominant-baseline="middle" font-size="11" fill="#F0EEE5" font-weight="600">machine learning</text>
+
+                    <!-- Node: hydrology / meteorology -->
+                    <rect x="25" y="227" width="180" height="26" fill="#faf9f4" stroke="#1a1a1a" stroke-width="1.5"/>
+                    <text x="115" y="240" text-anchor="middle" dominant-baseline="middle" font-size="11" fill="#2c2c2c">hydrology / meteorology</text>
+
+                    <!-- Node: operations research -->
+                    <rect x="525" y="227" width="150" height="26" fill="#faf9f4" stroke="#1a1a1a" stroke-width="1.5"/>
+                    <text x="600" y="240" text-anchor="middle" dominant-baseline="middle" font-size="11" fill="#2c2c2c">operations research</text>
+
+                    <!-- Node: coastal engineering -->
+                    <rect x="297" y="272" width="156" height="26" fill="#faf9f4" stroke="#1a1a1a" stroke-width="1.5"/>
+                    <text x="375" y="285" text-anchor="middle" dominant-baseline="middle" font-size="11" fill="#2c2c2c">coastal engineering</text>
+                </svg>
+            </div>
+        </section>
+
+        <!-- Projects -->
+        <section class="cv-section">
+            <h2 class="research-heading">projects</h2>
+
+            <div style="margin-bottom: 12px;">
+                <a href="research/coastal-camera-image-processing.html" class="research-link">
+                    <div class="paper-box">
+                        <div class="research-title">Coastal Camera Image Processing</div>
+                        <div class="research-date">July 2026 &middot; Computer Vision &middot; Coastal Engineering &middot; Image Processing</div>
+                        <div class="research-description">Python tools for Auckland Council's nine-camera coastal monitoring network. Transforms oblique time-lapse imagery into geo-referenced orthographic plan-view products using the pinhole camera model, robust homography estimation for frame stabilisation, and backward-warped rectification onto surveyed ground control points.</div>
+                    </div>
+                </a>
+            </div>
+
+            <div style="margin-bottom: 12px;">
+                <a href="research/vae-gan-rainfall-sim.html" class="research-link">
+                    <div class="paper-box">
+                        <div class="research-title">VAE-GAN for Hydrological Stochastic Simulation</div>
+                        <div class="research-date">March 2026 &middot; Deep Learning &middot; Stochastic Modelling &middot; Hydrology</div>
+                        <div class="research-description">Generative model combining a variational autoencoder with adversarial training to produce realistic, physically consistent synthetic rainfall ensembles. Targeted at hydrological simulation and flood risk assessment workflows requiring large ensembles of plausible precipitation scenarios.</div>
+                    </div>
+                </a>
+            </div>
+
+            <div style="margin-bottom: 12px;">
+                <a href="research/rainfall-extension.html" class="research-link">
+                    <div class="paper-box">
+                        <div class="research-title">Stochastic Co-variant Rainfall Extension</div>
+                        <div class="research-date">Oct 2025 &middot; Stochastic Modelling &middot; Hydrology &middot; Statistics</div>
+                        <div class="research-description">Methodology for extending short observed rainfall records using stochastic co-variate relationships with long-record atmospheric datasets. Preserves dependence structure and extreme-value behaviour, enabling return-period estimation beyond the observational record length.</div>
+                    </div>
+                </a>
+            </div>
+
+            <div style="margin-bottom: 12px;">
+                <a href="research/semantic-caching.html" class="research-link">
+                    <div class="paper-box">
+                        <div class="research-title">Intelligent Semantic Caching</div>
+                        <div class="research-date">Feb 2025 &middot; Software Engineering &middot; Machine Learning &middot; NLP</div>
+                        <div class="research-description">Semantic similarity-based caching layer for LLM API calls. Embeds queries and retrieves cached responses for semantically equivalent inputs, reducing redundant inference costs and latency in production systems while maintaining response quality.</div>
+                    </div>
+                </a>
+            </div>
+
+            <div style="margin-bottom: 12px;">
+                <a href="research/lstm-drone-scheduling.html" class="research-link">
+                    <div class="paper-box">
+                        <div class="research-title">LSTM Drone Scheduling</div>
+                        <div class="research-date">Nov 2024 &middot; Operations Research &middot; Deep Learning &middot; Optimisation</div>
+                        <div class="research-description">Long short-term memory network for adaptive drone route scheduling under uncertain demand. Learns operational patterns from historical dispatch data to generate near-optimal schedules, outperforming classical heuristics on dynamic delivery environments.</div>
+                    </div>
+                </a>
+            </div>
+
+            <!-- add non-research / work projects here -->
+
+        </section>
+
+        <!-- Skills & Tools -->
+        <section class="cv-section">
+            <h2 class="research-heading">skills &amp; tools</h2>
+            <div class="skills-grid">
+                <div class="skill-group">
+                    <div class="skill-label">ML / Deep Learning</div>
+                    <div class="skill-items">PyTorch &middot; scikit-learn &middot; NumPy &middot; SciPy &middot; Keras</div>
+                </div>
+                <div class="skill-group">
+                    <div class="skill-label">Computer Vision</div>
+                    <div class="skill-items">OpenCV &middot; SIFT &middot; FLANN &middot; homography estimation &middot; image rectification</div>
+                </div>
+                <div class="skill-group">
+                    <div class="skill-label">Stochastic &amp; Statistical</div>
+                    <div class="skill-items">Monte Carlo simulation &middot; copula modelling &middot; extreme value theory &middot; time-series analysis</div>
+                </div>
+                <div class="skill-group">
+                    <div class="skill-label">Optimisation</div>
+                    <div class="skill-items">Mixed-integer programs &middot; MAGSAC++ &middot; metaheuristics &middot; operations research</div>
+                </div>
+                <div class="skill-group">
+                    <div class="skill-label">Languages</div>
+                    <div class="skill-items">Python &middot; MATLAB &middot; C++ &middot; bash</div>
+                </div>
+                <div class="skill-group">
+                    <div class="skill-label">Tools</div>
+                    <div class="skill-items">Git &middot; Linux &middot; LaTeX</div>
+                </div>
+            </div>
+        </section>
+
     </main>
 
     <footer>

@@ -299,3 +299,85 @@ a:hover {
     margin-bottom: 30px;
     align-content: center;
 }
+
+/* CV page styles */
+.cv-section {
+    max-width: 900px;
+    margin-bottom: 50px;
+}
+
+.cv-diagram {
+    max-width: 750px;
+    padding: 24px 30px;
+}
+
+.skills-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-top: 15px;
+}
+
+.skill-group {
+    padding: 16px 20px;
+    border: 1px solid #d4cdb8;
+    background-color: #faf9f4;
+}
+
+.skill-label {
+    font-size: 11px;
+    font-weight: 600;
+    color: #B05730;
+    margin-bottom: 8px;
+}
+
+.skill-items {
+    font-size: 11px;
+    line-height: 1.8;
+    color: #3c3c3c;
+}
+
+/* Experience page styles */
+.experience-entry {
+    border: 1px solid #d4cdb8;
+    background-color: #faf9f4;
+    padding: 24px 30px;
+    margin-bottom: 12px;
+}
+
+.experience-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 15px;
+}
+
+.experience-role {
+    font-size: 14px;
+    font-weight: 600;
+    color: #1a1a1a;
+}
+
+.experience-company {
+    font-size: 12px;
+    color: #666;
+    margin-left: 10px;
+}
+
+.experience-date {
+    font-size: 11px;
+    color: #B05730;
+    white-space: nowrap;
+    margin-left: 20px;
+}
+
+.experience-entry ul {
+    font-size: 13px;
+    line-height: 1.7;
+    color: #3c3c3c;
+    margin-left: 16px;
+}
+
+.experience-entry li {
+    margin-bottom: 6px;
+}

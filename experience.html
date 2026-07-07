@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Martin Wright - Experience</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%23F0EEE5'/><text x='50' y='72' font-size='70' font-family='IBM Plex Mono,monospace' text-anchor='middle' fill='%23B05730'>μ</text></svg>">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header>
+        <h1>Martin Wright</h1>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="blog.html">Research</a>
+            <a href="experience.html" class="active">Experience</a>
+            <a href="aboutme.html">About</a>
+        </nav>
+    </header>
+
+    <main>
+
+        <!-- Employment Timeline + Cards -->
+        <section class="cv-section">
+            <h2 class="research-heading">experience</h2>
+
+            <div class="media-asset cv-diagram">
+                <svg viewBox="0 0 750 215" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;font-family:'IBM Plex Mono',monospace;">
+                    <!-- Grid lines at Jan of each year -->
+                    <line x1="214" y1="20" x2="214" y2="193" stroke="#d4cdb8" stroke-width="1" stroke-dasharray="3 3"/>
+                    <line x1="359" y1="20" x2="359" y2="193" stroke="#d4cdb8" stroke-width="1" stroke-dasharray="3 3"/>
+                    <line x1="503" y1="20" x2="503" y2="193" stroke="#d4cdb8" stroke-width="1" stroke-dasharray="3 3"/>
+                    <line x1="648" y1="20" x2="648" y2="193" stroke="#d4cdb8" stroke-width="1" stroke-dasharray="3 3"/>
+                    <!-- Baseline -->
+                    <line x1="130" y1="193" x2="720" y2="193" stroke="#d4cdb8" stroke-width="1"/>
+                    <!-- "now" indicator -->
+                    <line x1="720" y1="20" x2="720" y2="193" stroke="#B05730" stroke-width="1.5" stroke-dasharray="4 2"/>
+                    <text x="724" y="30" font-size="9" fill="#B05730">now</text>
+                    <!-- Year labels -->
+                    <text x="130" y="208" text-anchor="middle" font-size="9" fill="#888">Jun '22</text>
+                    <text x="214" y="208" text-anchor="middle" font-size="9" fill="#888">2023</text>
+                    <text x="359" y="208" text-anchor="middle" font-size="9" fill="#888">2024</text>
+                    <text x="503" y="208" text-anchor="middle" font-size="9" fill="#888">2025</text>
+                    <text x="648" y="208" text-anchor="middle" font-size="9" fill="#888">2026</text>
+                    <!-- Row labels -->
+                    <text x="125" y="39" text-anchor="end" dominant-baseline="middle" font-size="9" fill="#2c2c2c">grad. engineer</text>
+                    <text x="125" y="84" text-anchor="end" dominant-baseline="middle" font-size="9" fill="#2c2c2c">firmware ai eng.</text>
+                    <text x="125" y="129" text-anchor="end" dominant-baseline="middle" font-size="9" fill="#2c2c2c">strat. consulting</text>
+                    <text x="125" y="174" text-anchor="end" dominant-baseline="middle" font-size="9" fill="#2c2c2c">engineering intern</text>
+                    <!-- Bars (top = most recent) -->
+                    <!-- T+T grad: Feb 2025 (mo=32, x=515) to now (x=720), width=205 -->
+                    <rect x="515" y="25" width="205" height="28" fill="#B05730" stroke="#1a1a1a" stroke-width="1.5"/>
+                    <text x="617" y="39" text-anchor="middle" dominant-baseline="middle" font-size="9" fill="#F0EEE5">tonkin + taylor</text>
+                    <!-- Teknique: Nov 2024 (mo=29, x=479) to Feb 2025 (mo=32, x=515), width=36 -->
+                    <rect x="479" y="70" width="36" height="28" fill="#faf9f4" stroke="#1a1a1a" stroke-width="1.5"/>
+                    <!-- T+T intern: Nov 2023 (mo=17, x=335) to Mar 2024 (mo=21, x=383), width=48 -->
+                    <rect x="335" y="115" width="48" height="28" fill="#faf9f4" stroke="#1a1a1a" stroke-width="1.5"/>
+                    <!-- Babbage: Jun 2022 (mo=0, x=130) to Feb 2023 (mo=8, x=226), width=96 -->
+                    <rect x="130" y="160" width="96" height="28" fill="#faf9f4" stroke="#1a1a1a" stroke-width="1.5"/>
+                    <text x="178" y="174" text-anchor="middle" dominant-baseline="middle" font-size="9" fill="#2c2c2c">babbage</text>
+                </svg>
+            </div>
+
+            <div class="experience-entry">
+                <div class="experience-header">
+                    <div>
+                        <span class="experience-role">Graduate Engineer</span>
+                        <span class="experience-company">Tonkin &amp; Taylor &mdash; Auckland, NZ</span>
+                    </div>
+                    <span class="experience-date">Feb 2025 &ndash; Present</span>
+                </div>
+                <ul>
+                    <li>Developed an image processing and computer vision toolbox for Auckland Council's nine-camera coastal monitoring network, automating coastal erosion and hazard monitoring from oblique time-lapse imagery.</li>
+                    <li>Built a variational autoencoder-based model for generating stochastic synthetic rainfall data for dam yield analysis under climate change scenarios.</li>
+                    <li>Developed a stochastic rainfall extension combining Generalised Pareto Distributions and empirical resampling to extend hydrological records back to 1853, enabling 1000-year synthetic simulations with correlated extreme drought scenarios.</li>
+                    <li>Built and maintained a VB .Net simulation application for Watercare modelling Auckland's water supply system across reservoirs, rivers, and catchments, incorporating a reverse auction pricing mechanism and NPV-based optimisation to evaluate infrastructure investment scenarios.</li>
+                    <li>Processed and analysed large datasets using SQL, Python, and Excel to support project proposals and risk assessments; outputs delivered via Tableau dashboards.</li>
+                </ul>
+            </div>
+
+            <div class="experience-entry">
+                <div class="experience-header">
+                    <div>
+                        <span class="experience-role">Firmware AI Engineer</span>
+                        <span class="experience-company">Teknique Ltd. &mdash; Auckland, NZ</span>
+                    </div>
+                    <span class="experience-date">Nov 2024 &ndash; Feb 2025</span>
+                </div>
+                <ul>
+                    <li>Developed computer vision applications on the edge for tailored video-driven analytics.</li>
+                    <li>Prototyped deployment of multimodal models (CLIP) and YOLO to edge hardware &mdash; embedded C++ development with GStreamer pipelines on an evk board in a yocto-linux environment.</li>
+                    <li>Wrote C Linux drivers for the embedded computing environment.</li>
+                    <li>Integrated RAG and vector databases into a web-app enabling natural language querying of cached video footage.</li>
+                </ul>
+            </div>
+
+            <div class="experience-entry">
+                <div class="experience-header">
+                    <div>
+                        <span class="experience-role">Strategic Consulting Intern</span>
+                        <span class="experience-company">Tonkin &amp; Taylor &mdash; Auckland, NZ</span>
+                    </div>
+                    <span class="experience-date">Nov 2023 &ndash; Mar 2024</span>
+                </div>
+                <ul>
+                    <li>Developed a proof-of-concept remote sensing tool using machine learning to predict algal blooms, encompassing data pipeline development and quantitative model building.</li>
+                    <li>Conducted market research for new service line opportunities, analysing market conditions and commercial viability.</li>
+                    <li>Automated Excel reporting workflows using Python and APIs, improving efficiency of data processing tasks.</li>
+                </ul>
+            </div>
+
+            <div class="experience-entry">
+                <div class="experience-header">
+                    <div>
+                        <span class="experience-role">Engineering Intern</span>
+                        <span class="experience-company">Babbage Consultants &mdash; Auckland, NZ</span>
+                    </div>
+                    <span class="experience-date">Jun 2022 &ndash; Feb 2023</span>
+                </div>
+                <ul>
+                    <li>Identified pricing discrepancies in Auckland's unmetered street lighting network, resulting in identified savings of up to NZ$2M per annum in excess electricity charges.</li>
+                    <li>Developed complex SQL queries to automate quality assurance processes across large relational databases.</li>
+                    <li>Applied statistical models to identify lamp rating anomalies, providing evidence for contract renegotiations.</li>
+                </ul>
+            </div>
+
+        </section>
+
+        <!-- Education -->
+        <section class="cv-section">
+            <h2 class="research-heading">education</h2>
+            <div class="experience-entry">
+                <div class="experience-header">
+                    <div>
+                        <span class="experience-role">University of Auckland</span>
+                        <span class="experience-company">BE(Hons) Engineering Science</span>
+                    </div>
+                    <span class="experience-date">GPA 7.2 / 9.0</span>
+                </div>
+                <ul>
+                    <li><strong>Coursework:</strong> Probability &amp; Statistics, Financial Modelling, Stochastic Simulation, Linear &amp; Nonlinear Optimisation, Numerical Modelling, Embedded Systems</li>
+                    <li><strong>Key skills:</strong> Mathematical Modelling, Statistical Analysis, Algorithm Design, Operations Research, Risk Analysis</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Non-research Projects -->
+        <section class="cv-section">
+            <h2 class="research-heading">projects</h2>
+
+            <div style="margin-bottom: 12px;">
+                <a href="https://github.com/mwri469/clip_onnx_cpp_inference" class="research-link" target="_blank" rel="noopener noreferrer">
+                    <div class="paper-box">
+                        <div class="research-title">CLIP C++ Inference</div>
+                        <div class="research-date">github.com/mwri469/clip &middot; C++ &middot; ONNX &middot; Embedded</div>
+                        <div class="research-description">High-performance C++ implementation of OpenAI's CLIP tokenisation and inference pipeline for embedded devices. Includes a custom tokeniser library with advanced text-processing and UTF-8 encoding support. Built with CMake, ONNX Runtime, and LibTorch.</div>
+                    </div>
+                </a>
+            </div>
+
+            <div style="margin-bottom: 12px;">
+                <a href="https://github.com/mwri469/cliffi" class="research-link" target="_blank" rel="noopener noreferrer">
+                    <div class="paper-box">
+                        <div class="research-title">Cliffi: CLI For Financial Instruments</div>
+                        <div class="research-date">github.com/mwri469/cliffi &middot; C++ &middot; LibcURL</div>
+                        <div class="research-description">Terminal-based UI for live financial instrument tracking. Streams real-time market data to the command line.</div>
+                    </div>
+                </a>
+            </div>
+
+            <div style="margin-bottom: 12px;">
+                <div class="paper-box">
+                    <div class="research-title">Food Supply Chain Economic Analysis</div>
+                    <div class="research-date">Systems Engineering &middot; Financial Modelling &middot; Cost-Benefit Analysis</div>
+                    <div class="research-description">Systems engineering project analysing New Zealand's food supply chain. Constructed 10-year discounted cash flow models with NPV, IRR, and cost-benefit ratio calculations across four policy intervention packages. Sensitivity analysis across economic, social, and environmental dimensions.</div>
+                </div>
+            </div>
+
+        </section>
+
+    </main>
+
+    <footer>
+        <p>&mu;</p>
+    </footer>
+</body>
+</html>
