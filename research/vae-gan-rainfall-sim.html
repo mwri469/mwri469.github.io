@@ -9,6 +9,10 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+        onload="renderMathInElement(document.body, {delimiters: [{left: '$$', right: '$$', display: true},{left: '$', right: '$', display: false}]});"></script>
 </head>
 <body class="research-detail">
     <header>
@@ -69,20 +73,63 @@
         <div class="research-content">
             <div class="content-section">
                 <h3>Background & Motivation</h3>
-                <p>Traditional stochastic weather generators (SWGs) cannot simultaneously produce spatially co-variant rainfall across multiple sites while preserving multi-variable temporal dependencies. For water supply systems like Auckland's — spanning the Hunua and Waitakere Ranges plus the Waikato River — accurately modelling how rainfall interacts across catchments during drought is essential for yield assessment and infrastructure planning.</p>
-                <p>Existing tools like the Stochastic Climate Library can generate either multi-site rainfall or co-variant rainfall–PET at a single site, but not both. This project explores VAEs as a unified alternative.</p>
+                <p>Traditional stochastic weather generators can't produce spatially co-variant rainfall across multiple sites while preserving temporal dependencies — a problem for water supply systems like Auckland's, which span several catchments. This project explores convolutional VAEs as a unified alternative.</p>
             </div>
 
             <div class="content-section">
                 <h3>Methodology</h3>
-                <p>A convolutional VAE encodes daily spatial rainfall fields (from CHIRPS and CCAM gridded datasets) into a regularized 64-dimensional latent space. A GRU-based transition model learns temporal dynamics p(z<sub>t</sub> | z<sub>t−1</sub>, c<sub>t</sub>) conditioned on day-of-year and climate scenario. Decoding reconstructs the full spatial field.</p>
-                <p>Training uses β-VAE weighting with KL warm-up over 30 epochs to balance reconstruction fidelity against latent structure. Extreme-scenario synthesis is achieved by sampling from the tails of the learned Gaussian prior — points far from the mean correspond to unusual weather states.</p>
+                <p>A convolutional encoder-decoder learns a compressed representation of daily rainfall fields pooled across seven CMIP6 GCMs. Two architectures are compared: a continuous β-VAE with a GRU temporal transition model, and a two-level VQ-VAE-2 with discrete codebooks — see Model Formulation below for the full objective and data details.</p>
             </div>
 
             <div class="content-section">
                 <h3>Results</h3>
-                <p>The model successfully captures orographic effects and spatial dependencies that site-independent methods miss. QQ plots show good distributional agreement with observed rainfall across percentiles. By varying sampling standard deviation from 0.3 to 1.3 in latent space, the decoder produces a continuous range from drought to extreme monsoon conditions while maintaining physical spatial coherence.</p>
+                <p>The continuous VAE (900 epochs) reconstructs plausible aggregate statistics, but its latent space is heavily degenerate — PCA shows ~99% of variance on a single axis. The VQ-VAE-2 (20 of a planned 500 epochs) shows a far healthier 60/34% split. See Latent Space Diagnostics below.</p>
             </div>
+
+            <div class="content-section">
+                <h3>Lessons Learned</h3>
+                <p>The original Gaussian VAE was effectively learning to predict the average rainfall pattern rather than distinct weather regimes — a common failure mode on skewed, mostly-zero precipitation data. Switching to a discrete codebook forces the model away from this degenerate solution — full explanation below.</p>
+            </div>
+        </div>
+
+        <h3>Model Formulation</h3>
+
+        <div class="paper-body">
+            <p>The continuous VAE is trained to maximise a conditional evidence lower bound (ELBO), where the prior over the latent state is itself learned by a GRU-based transition model rather than fixed to $\mathcal{N}(0, I)$, so that it can capture day-to-day persistence:</p>
+        </div>
+        <div class="paper-body">
+            <p>$$\mathcal{L}_{VAE} = \mathbb{E}_{q_\phi(z_t|x_t,c_t)}\big[\log p_\theta(x_t \mid z_t, c_t)\big] - \beta \, D_{KL}\big(q_\phi(z_t|x_t,c_t)\,\|\,p_\theta(z_t \mid z_{t-1}, c_t)\big)$$</p>
+        </div>
+        <div class="paper-body">
+            <p>Reconstruction uses a per-pixel Gaussian log-likelihood over the encoded spatial field, and $\beta$ is annealed linearly from 0 to 1 over the first 30 epochs to avoid posterior collapse. Conditioning $c_t$ is a day-of-year cyclic encoding, and the encoder/decoder are convolutional over a 60×60 grid covering the Auckland water supply catchments, at 5km resolution, built from bias-corrected CCAM output for ACCESS-CM2, AWI-CM-1-1-MR, CNRM-CM6-1, EC-Earth3, GFDL-ESM4, NorESM2-MM and NZESM under the historical scenario.</p>
+        </div>
+
+        <div class="paper-body">
+            <p>The VQ-VAE-2 instead compresses each field into two levels of discrete codes (a coarse "top" level and a finer "bottom" level conditioned on it). Each encoder output is snapped to its nearest neighbour in a learned codebook of $K=512$ embeddings, with gradients passed through the non-differentiable lookup via the straight-through estimator:</p>
+        </div>
+        <div class="paper-body">
+            <p>$$\mathcal{L}_{VQ} = \|x - \hat{x}\|_1 \;+\; \|\text{sg}[z_e] - e\|_2^2 \;+\; \beta_c\,\|z_e - \text{sg}[e]\|_2^2$$</p>
+        </div>
+        <div class="paper-body">
+            <p>where $\text{sg}[\cdot]$ denotes stop-gradient, $e$ is the selected codebook embedding, and $\beta_c = 0.25$ is the commitment cost. Codebook entries are updated via exponential moving average (decay 0.99) rather than gradient descent, and dead codes (cluster size below 1) are periodically re-initialised from live encoder outputs to prevent codebook collapse.</p>
+        </div>
+
+        <h3>Latent Space Diagnostics</h3>
+
+        <div class="paper-body">
+            <p>To compare the two latent spaces directly, 500 days are encoded and projected to 2D with PCA. For the continuous VAE, this recovers the posterior mean $\mu$ per day directly. For the VQ-VAE-2 — which has no single continuous vector per day — the pre-quantization top-level features are global-average-pooled into a summary vector instead.</p>
+        </div>
+        <div class="paper-body">
+            <p>After 900 epochs, the VAE's projection concentrates ~99% of variance on a single principal component: effectively, the model has learned a one-dimensional "how wet was this day" axis rather than a rich space of distinct spatial patterns. The VQ-VAE-2, despite only 20 of a planned 500 epochs of training, splits variance roughly 60%/34% across its first two components — a much less degenerate structure. It has no learned prior over the discrete codes yet, so the explorer above visualises reconstructions of real days rather than freely generated samples.</p>
+        </div>
+
+        <h3>Why Move to a Discrete Latent Space?</h3>
+
+        <div class="paper-body">
+            <p>The original design used a standard β-VAE recipe: encode to $(\mu, \log\sigma^2)$, reparameterise, and reconstruct with a per-pixel Gaussian negative log-likelihood. That works well for smooth, roughly-Gaussian fields, but precipitation is heavy-tailed and mostly zero — a loss that minimises expected error under uncertainty is satisfied by predicting something close to the local average, not a specific plausible day. In practice this showed up as the near-degenerate latent space described above, and reconstructions that looked more like a smoothed climatology than an individual weather pattern.</p>
+        </div>
+        <div class="paper-body">
+            <p>Switching to a VQ-VAE-2 replaces the continuous Gaussian bottleneck with a discrete codebook. Because the model must reconstruct from one of a finite set of learned codes rather than a continuous mean, it can no longer default to "predict the average" — it has to commit to a specific pattern. Early results support this: a 60/34% PCA variance split versus 99/0.4% for the original VAE suggests meaningfully different rainfall regimes are being captured, rather than just overall wetness. That said, this model is only 20 of a planned 500 epochs into training, and a learned prior over the discrete codes still needs to be added before it can generate free-running sequences the way the original VAE does.</p>
         </div>
     </main>
 
@@ -116,12 +163,17 @@
             align-items: flex-start;
         }
         .pca-plot-wrap {
-            display: flex;
-            flex-direction: column;
+            display: grid;
+            grid-template-columns: auto 360px;
+            grid-template-rows: 360px auto;
             align-items: center;
+            justify-items: center;
+            column-gap: 8px;
             flex: 0 0 380px;
         }
         #pca-svg {
+            grid-row: 1;
+            grid-column: 2;
             width: 360px;
             height: 360px;
             background: white;
@@ -132,9 +184,19 @@
             font-size: 11px;
             color: #888;
             font-family: 'IBM Plex Mono', monospace;
+            white-space: nowrap;
         }
-        .pca-axis-y { margin-bottom: 6px; }
-        .pca-axis-x { margin-top: 6px; }
+        .pca-axis-y {
+            grid-row: 1;
+            grid-column: 1;
+            writing-mode: vertical-rl;
+            transform: rotate(180deg);
+        }
+        .pca-axis-x {
+            grid-row: 2;
+            grid-column: 2;
+            margin-top: 6px;
+        }
         .pca-cloud-dot {
             fill: #d4cdb8;
             opacity: 0.6;
@@ -243,7 +305,7 @@
                 if (manifest.pcaVarianceExplained) {
                     const ve = manifest.pcaVarianceExplained;
                     const note = document.createElement('div');
-                    note.style.cssText = 'font-size:11px;color:#aaa;margin-top:6px;text-align:center;font-family:IBM Plex Mono,monospace;';
+                    note.style.cssText = 'grid-column: 1 / span 2; grid-row: 3; font-size:11px;color:#aaa;margin-top:6px;text-align:center;font-family:IBM Plex Mono,monospace;';
                     note.textContent = `Variance explained: PC1 ${(ve[0]*100).toFixed(1)}%, PC2 ${(ve[1]*100).toFixed(1)}%`;
                     document.querySelector('.pca-plot-wrap').appendChild(note);
                 }
@@ -256,15 +318,15 @@
                     // Fallback: embed data inline so the page works from file:// too
                     const base = '../assets/pca-samples/';
                     render({
-                        pcaVarianceExplained: [0.972, 0.019],
+                        pcaVarianceExplained: [0.596, 0.336],
                         cloud: [],
                         points: [
-                            { id:1, pcaNormX:-0.641, pcaNormY:-0.200, label:'Heavy Widespread Rainfall',  imgSrc: base+'point-1.png' },
-                            { id:2, pcaNormX:-0.348, pcaNormY:-0.014, label:'Above Average Rainfall',      imgSrc: base+'point-2.png' },
-                            { id:3, pcaNormX:-0.069, pcaNormY: 0.255, label:'Moderate Rainfall',           imgSrc: base+'point-3.png' },
-                            { id:4, pcaNormX: 0.236, pcaNormY:-0.034, label:'Below Average Rainfall',      imgSrc: base+'point-4.png' },
-                            { id:5, pcaNormX: 0.502, pcaNormY:-0.065, label:'Dry Conditions',              imgSrc: base+'point-5.png' },
-                            { id:6, pcaNormX: 0.754, pcaNormY:-0.024, label:'Drought / Very Dry',          imgSrc: base+'point-6.png' },
+                            { id:1, pcaNormX:-0.419, pcaNormY: 0.177, label:'Cluster 1', imgSrc: base+'point-1.png' },
+                            { id:2, pcaNormX:-0.069, pcaNormY:-0.498, label:'Cluster 2', imgSrc: base+'point-2.png' },
+                            { id:3, pcaNormX: 0.040, pcaNormY: 0.342, label:'Cluster 3', imgSrc: base+'point-3.png' },
+                            { id:4, pcaNormX: 0.290, pcaNormY:-0.161, label:'Cluster 4', imgSrc: base+'point-4.png' },
+                            { id:5, pcaNormX: 0.552, pcaNormY: 0.467, label:'Cluster 5', imgSrc: base+'point-5.png' },
+                            { id:6, pcaNormX: 0.681, pcaNormY:-0.298, label:'Cluster 6', imgSrc: base+'point-6.png' },
                         ]
                     });
                 });
